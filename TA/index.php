@@ -38,7 +38,7 @@
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 
-					<a href="daftar.php">Daftar Akun</a>
+					<a href="formdaftar.php">Daftar Akun</a>
 				</div>
 				<div class="col-md-2 side-sector">
 					<p>.col-md-3</p>

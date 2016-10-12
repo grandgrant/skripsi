@@ -1,47 +1,54 @@
 <?php
+        // start get input from method post
         if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $username = test_input($_POST["username"]);
             $password = test_input($_POST["password"]);
-            connectdatabase();
+            $cpuid = test_input($_POST["CPUID"]);
+            $motherboardsn = test_input($_POST["MotherboardSN"]);
+            $biossn = test_input($_POST["BIOSSN"]);
+            $macaddress = test_input($_POST["MacAddress"]);
         } 
-    
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    function connectdatabase()
-    {
-        $usernsamedatabase = "root";
+        // finish
+        // start connect database
+        $usernamedatabase = "root";
         $passworddatabase = "";
         $namedatabase = "user";
         $server = "localhost";
-        $connectingdatabase = new mysqli($server,$usernsamedatabase,$passworddatabase);
+        $connectingdatabase = new mysqli($server,$usernamedatabase,$passworddatabase,$namedatabase);
 
         if($connectingdatabase->connect_error)
         {
             die("Koneksi database gagal ". $connectingdatabase->connect_error);
         }
-        echo "Connected successfully";
-    }
+        // finish
+        // start get data user from database
+        $queryselectuserdata = "SELECT * FROM datauser"; 
+        $getdatauserfromdatabase = $connectingdatabase->query($queryselectuserdata)
 
+        if ($getdatauserfromdatabase->num_rows > 0) 
+        {
+            while($row = $result->fetch_assoc()) 
+            {
+                $usernamedata = $row["username"];
+                $passworddata = $row["password"];
+                $macaddressdata = $row["mac_address"];
+                $cpuiddata = $row["cpuid"];
+                $motherboardsndata  = $row["mbsn"];
+                $biossndata = $row["biossn"];
+            }
+        }
+        $connectingdatabase->close();
+        // finish
+        // start auhtentication
+        if ($username == $usernamedata && $password == $passworddata && $macaddress == $macaddressdata && $cpuid == $cpuiddata && $motherboardsn == $motherboardsndata && $biossn == $biossndata) 
+        {
+            # code...
+        }
+        // finish
 
     
-
-
-    //$connectingdatabase->close();
     
-    function getdeviceinformation()
-    {
-        $cpuid = $_POST["CPUID"];
-        $motherboardsn = $_POST["MotherboardSN"];
-        $biossn = $_POST["BIOSSN"];
-        $macaddress = $_POST["MacAddress"];
-     }
 
      function getuserIpAddress()
      {
@@ -65,8 +72,9 @@
         echo $ip;
      }
 
-     function authentication()
-     {
-
-     }
+      function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
 ?>

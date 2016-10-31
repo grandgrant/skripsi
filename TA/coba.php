@@ -1,6 +1,7 @@
 <?php
-        $username = "";
-        $password = "";
+        $usernamelogin = "";
+        $passwordlogin = "";
+        $kodeuserlogn = "";
         $timestamplogin = 0;
         $usernamedatauser = "";
         $passworddatauser = "";
@@ -9,12 +10,23 @@
         $motherboardsndatauser = "";
         $biossndatauser = "";
 
+        //iteration variable
+        $i = 0;
+
+        // variable to save data from table data login
+        $kodeuserdatalogin_array = array();
+        $cpuiddatalogin_array = array();
+        $motherboardsndatalogin_array = array();
+        $biossndatalogin_array = array();
+        $timestampdatalogin_array = array();
+
+
+        //variable data login 
         $kodeuserdatalogin = "";
         $cpuiddatalogin = "";
         $motherboardsndatalogin = "";
         $biossndatalogin = "";
-        $timestampdatalogin = 0;
-
+        $timestampdatalogin = "";
 
         // start get input from method post
         if($_SERVER["REQUEST_METHOD"] == "POST")
@@ -60,25 +72,34 @@
         $resultdatalogin = $connectingdatabase->query($querydatalogin);
 
         if ($resultdatalogin->num_rows > 0) 
-        {
+        {   
+            
             while($row = $resultdatalogin->fetch_assoc()) 
-            {
-                $kodeuserdatalogin  = $row["kode_user"];
-                $cpuiddatalogin = $row["cpuid"];
-                $motherboardsndatalogin  = $row["motherboardsn"];
-                $biossndatalogin = $row["biossn"];
-                $timestampdatalogin = $row["timestamphardware"];
+            {   
+                $i++;
+                $kodeuserdatalogin_array[$i]  = $row["kode_user"];
+                $cpuiddatalogin_array[$i] = $row["cpuid"];
+                $motherboardsndatalogin_array[$i]  = $row["motherboardsn"];
+                $biossndatalogin_array[$i] = $row["biossn"];
+                $timestampdatalogin_array[$i] = $row["timestamphardware"];
             }
-        }
-
-        $differencetimestamp = timestamplogin - timestampdatalogin;
-
-        // problem variable naro data kalo banyak dari limit dan dipilih jika timestampnya 2 menit.
+        }// finish get data from userlogin
 
         $connectingdatabase->close();
-        
+        $differencetimestamp = $timestampdatalogin_array[1] - $timestamplogin;
+
+        if ($differencetimestamp <= 120)
+        {
+            $kodeuserlogin = $kodeuserdatalogin_array[1];
+            $cpuiddatalogin = $cpuiddatalogin_array[1];
+            $motherboardsndatalogin = $motherboardsndatalogin_array[1];
+            $biossndatalogin = $biossndatalogin_array[1];
+            $timestampdatalogin = $timestampdatalogin_array[1];    
+        }
+
+    
         // start auhtentication
-        if ($usernamelogin == $usernamedatauser && $passwordlogin == $passworddatauser && $cpuiddatauser == $cpuiddata && $motherboardsn == $motherboardsndata && $biossn == $biossndata) 
+        if ($usernamelogin == $usernamedatauser && $passwordlogin == $passworddatauser && $kodeuserlogin == ) 
         {
             # code...
         }

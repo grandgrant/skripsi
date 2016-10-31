@@ -35,6 +35,11 @@
 							<label for="InputPassword">Password</label>
 							<input type="password" class="form-control" id="userpassword" placeholder="Masukkkan Password" name="password">
 						</div>
+						<div class="form-group">
+							<label for="InputCodeUser">Code User</label>
+							<input type="text" class="form-control" id="codeuser" placeholder="Masukkkan Password" name="kodeuser">
+						</div>
+
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 

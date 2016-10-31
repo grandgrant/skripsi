@@ -1,0 +1,22 @@
+<?php
+
+		$queryselectuserdataa = "SELECT * FROM datauser WHERE username = '$usernamelogin'"; 
+        $getdatauserfromdatabasea = $connectingdatabase->query($queryselectuserdata);
+
+        if ($getdatauserfromdatabasea->num_rows > 0) 
+        {
+            while($row = $result->fetch_assoc()) 
+            {
+                $usernamedataa = $row["username"];
+                $passworddataa = $row["password"];
+                $cpuiddataa = $row["cpuid"];
+                $motherboardsndataa  = $row["mbsn"];
+                $biossndataa = $row["biossn"];
+            }
+        }
+
+        echo
+        
+
+
+?>

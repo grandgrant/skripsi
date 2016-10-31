@@ -1,13 +1,28 @@
 <?php
+        $username = "";
+        $password = "";
+        $timestamplogin = 0;
+        $usernamedatauser = "";
+        $passworddatauser = "";
+        $kodeuserdatauser = "";
+        $cpuiddatauser = "";
+        $motherboardsndatauser = "";
+        $biossndatauser = "";
+
+        $kodeuserdatalogin = "";
+        $cpuiddatalogin = "";
+        $motherboardsndatalogin = "";
+        $biossndatalogin = "";
+        $timestampdatalogin = 0;
+
+
         // start get input from method post
         if($_SERVER["REQUEST_METHOD"] == "POST")
         {
-            $username = test_input($_POST["username"]);
-            $password = test_input($_POST["password"]);
-            $cpuid = test_input($_POST["CPUID"]);
-            $motherboardsn = test_input($_POST["MotherboardSN"]);
-            $biossn = test_input($_POST["BIOSSN"]);
-            $macaddress = test_input($_POST["MacAddress"]);
+            $usernamelogin = test_input($_POST["username"]);
+            $passwordlogin = test_input($_POST["password"]);
+            $kodeuserlogin = test_input($_POST["kodeuser"]);
+            $timestamplogin = time();
         } 
         // finish
         // start connect database
@@ -22,26 +37,48 @@
             die("Koneksi database gagal ". $connectingdatabase->connect_error);
         }
         // finish
-        // start get data user from database
-        $queryselectuserdata = "SELECT * FROM datauser"; 
-        $getdatauserfromdatabase = $connectingdatabase->query($queryselectuserdata)
+        // start get data user from table datauser
+        $querydatauser = "SELECT * FROM datauser WHERE Username = '$usernamelogin'"; 
+        $resultdatauser = $connectingdatabase->query($querydatauser);
 
-        if ($getdatauserfromdatabase->num_rows > 0) 
+        if ($resultdatauser->num_rows > 0) 
         {
-            while($row = $result->fetch_assoc()) 
+            while($row = $resultdatauser->fetch_assoc()) 
             {
-                $usernamedata = $row["username"];
-                $passworddata = $row["password"];
-                $macaddressdata = $row["mac_address"];
-                $cpuiddata = $row["cpuid"];
-                $motherboardsndata  = $row["mbsn"];
-                $biossndata = $row["biossn"];
+                $usernamedatauser = $row["username"];
+                $passworddatauser = $row["password"];
+                $kodeuserdatauser  = $row["kode_user"];
+                $cpuiddatauser = $row["cpuid"];
+                $motherboardsndatauser  = $row["mbsn"];
+                $biossndatauser = $row["biossn"];
             }
         }
+        // finish get data from datauser
+
+        // start get data from userlogin
+        $querydatalogin = "SELECT * FROM datalogin WHERE kode_user = '$kodeuserlogin' LIMIT 10 "; 
+        $resultdatalogin = $connectingdatabase->query($querydatalogin);
+
+        if ($resultdatalogin->num_rows > 0) 
+        {
+            while($row = $resultdatalogin->fetch_assoc()) 
+            {
+                $kodeuserdatalogin  = $row["kode_user"];
+                $cpuiddatalogin = $row["cpuid"];
+                $motherboardsndatalogin  = $row["motherboardsn"];
+                $biossndatalogin = $row["biossn"];
+                $timestampdatalogin = $row["timestamphardware"];
+            }
+        }
+
+        $differencetimestamp = timestamplogin - timestampdatalogin;
+
+        // problem variable naro data kalo banyak dari limit dan dipilih jika timestampnya 2 menit.
+
         $connectingdatabase->close();
-        // finish
+        
         // start auhtentication
-        if ($username == $usernamedata && $password == $passworddata && $macaddress == $macaddressdata && $cpuid == $cpuiddata && $motherboardsn == $motherboardsndata && $biossn == $biossndata) 
+        if ($usernamelogin == $usernamedatauser && $passwordlogin == $passworddatauser && $cpuiddatauser == $cpuiddata && $motherboardsn == $motherboardsndata && $biossn == $biossndata) 
         {
             # code...
         }
@@ -77,4 +114,5 @@
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
+    }
 ?>

@@ -33,7 +33,6 @@
         {
             $usernamelogin = test_input($_POST["username"]);
             $passwordlogin = test_input($_POST["password"]);
-            $kodeuserlogin = test_input($_POST["kodeuser"]);
             $timestamplogin = time();
         } 
         // finish
@@ -68,7 +67,7 @@
         // finish get data from datauser
 
         // start get data from userlogin
-        $querydatalogin = "SELECT * FROM datalogin WHERE kode_user = '$kodeuserlogin' LIMIT 10 "; 
+        $querydatalogin = "SELECT * FROM datalogin WHERE kode_user = '$kodeuserdatauser' LIMIT 10 "; 
         $resultdatalogin = $connectingdatabase->query($querydatalogin);
 
         if ($resultdatalogin->num_rows > 0) 
@@ -99,9 +98,9 @@
 
     
         // start auhtentication
-        if ($usernamelogin == $usernamedatauser && $passwordlogin == $passworddatauser && $kodeuserlogin == ) 
+        if ($usernamelogin == $usernamedatauser && $passwordlogin && $cpuiddatauser == $cpuiddatalogin && $motherboardsndatauser == $motherboardsndatalogin && $biossndatauser == $biossndatalogin) 
         {
-            # code...
+            
         }
         // finish
 

@@ -1,4 +1,6 @@
 <?php
+        require 'aws-autoloader.php';
+
         $usernamelogin = "";
         $passwordlogin = "";
         $kodeuserlogn = "";
